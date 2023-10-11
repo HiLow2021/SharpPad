@@ -1,13 +1,3 @@
-Ôªøusing System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using SharpDX.XInput;
 using SharpPad.EventArgs;
 
@@ -16,9 +6,9 @@ namespace SharpPad.Demo
     public partial class Form1 : Form
     {
         private readonly ToolStripMenuItem[] menuItems;
-        private readonly XInputManager manager = new XInputManager();
-        private XController[] controllers;
-        private XController targetController;
+        private readonly XInputManager manager = new();
+        private XController[] controllers = Array.Empty<XController>();
+        private XController? targetController;
         private bool isVibrating;
 
         public Form1()
@@ -152,15 +142,15 @@ namespace SharpPad.Demo
 
             targetController = controller;
 
-            void XController_ButtonDown(object sender, XControllerButtonEventArgs e)
+            void XController_ButtonDown(object? sender, XControllerButtonEventArgs e)
             {
-                ShowMessage(e.Buttons.ToString() + " „Åå " + nameof(XController.ButtonDown));
+                ShowMessage(e.Buttons.ToString() + " Ç™ " + nameof(XController.ButtonDown));
             }
-            void XController_ButtonUp(object sender, XControllerButtonEventArgs e)
+            void XController_ButtonUp(object? sender, XControllerButtonEventArgs e)
             {
-                ShowMessage(e.Buttons.ToString() + " „Åå " + nameof(XController.ButtonUp));
+                ShowMessage(e.Buttons.ToString() + " Ç™ " + nameof(XController.ButtonUp));
             }
-            void XController_StateChanged(object sender, XControllerStateChangedEventArgs e)
+            void XController_StateChanged(object? sender, XControllerStateChangedEventArgs e)
             {
                 var message = string.Empty;
                 var gamepad = e.NewState.Gamepad;
@@ -183,7 +173,7 @@ namespace SharpPad.Demo
 
                 ShowButtonStates(message);
             }
-            void XController_BatteryLevelChanged(object sender, XControllerBatteryLevelChangedEventArgs e)
+            void XController_BatteryLevelChanged(object? sender, XControllerBatteryLevelChangedEventArgs e)
             {
                 ShowBatteryLevelMessage(e.BatteryType, e.NewBatteryLevel);
             }
@@ -191,7 +181,7 @@ namespace SharpPad.Demo
 
         private void ShowButtonStates(string message)
         {
-            label1.Invoke(new Action(() => label1.Text = message));
+            label2.Invoke(new Action(() => label2.Text = message));
         }
 
         private void ShowMessage(string message)
@@ -203,11 +193,11 @@ namespace SharpPad.Demo
         {
             if (isConnected)
             {
-                ShowStatusMessage("„Ç≥„É≥„Éà„É≠„Éº„É©Êé•Á∂ö‰∏≠");
+                ShowStatusMessage("ÉRÉìÉgÉçÅ[Éâê⁄ë±íÜ");
             }
             else
             {
-                ShowStatusMessage("XInput ÂØæÂøú„Ç≥„É≥„Éà„É≠„Éº„É©„ÅåÊé•Á∂ö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì");
+                ShowStatusMessage("XInput ëŒâûÉRÉìÉgÉçÅ[ÉâÇ™ê⁄ë±Ç≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
             }
         }
 
@@ -218,7 +208,7 @@ namespace SharpPad.Demo
 
         private void ShowBatteryLevelMessage(BatteryType batteryType, BatteryLevel batteryLevel)
         {
-            statusStrip1.Invoke(new Action(() => toolStripStatusLabel2.Text = $"„Çø„Ç§„Éó : {batteryType}  ÊÆãÈáè : {batteryLevel}"));
+            statusStrip1.Invoke(new Action(() => toolStripStatusLabel2.Text = $"É^ÉCÉv : {batteryType}  écó  : {batteryLevel}"));
         }
     }
 }
